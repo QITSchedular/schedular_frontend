@@ -41,6 +41,8 @@ import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import axios from "axios";
 import dxLoadPanel from "devextreme/ui/load_panel";
 import LoaderPortal from "./Loader";
+import Popbox from "./utils/Popbox";
+import { notification } from "./utils/notification";
 
 
 
@@ -60,6 +62,7 @@ const FormMain = (props) => {
   const [docId, setDocId] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const [loader, setLoader] = useState(false);
+  
 
   const register = async() => {
     setLoader(true);
@@ -72,14 +75,8 @@ const FormMain = (props) => {
     };
     if(!email || !name || !website || !companyName || !subject){
       setLoader(false);
-      return notify(
-        {
-          message: "Please add all the fields to schedule the meet...",
-          width: 500,
-        },
-        "error",
-        1000
-      );
+      return(notification("Please add all the fields to schedule the meet...", "error"))
+
     } else{
       try {
         // set the data in database first
@@ -113,30 +110,26 @@ const FormMain = (props) => {
           handleCodeInApp: true
         }).then((data)=>{
           setLoader(false);
-          return notify({
-            message: "Click on the link recieved on you email to proceed.",
-            width: 500
-          },
-          "info", 500
-          );
+          return (notification("Click on the link recieved on your email to proceed.", "info"));
+          
+        }).catch((error)=>{
+          localStorage.removeItem("mydate");
+          localStorage.removeItem("flag");
+          localStorage.removeItem("mytime");
+          notification("Something went wrong please try again after some time","error");
+          //console.log("error");
+          return navigate('/');
+          
         })
       } catch (error) {
         setLoader(false);
-        console.log(error);
+        notification("Something went wrong please try again after some time","error");
+        console.log("error");
+        return navigate('/');
       }
     }
      
   };
-
-  // onAuthStateChanged - observer function
-  // useEffect(() => {
-  //   if (loading) return;
-  //   if (user)
-  //     navigate(
-  //       "/scheduleTime/phoneAuthentication/EnterDetails/EmailVerification"
-  //     );
-  // }, [user, loading]);
-
   const namePattern = /^[^0-9]+$/;
   const phonePattern = /^[02-9]\d{9}$/;
   const phoneRules = {
@@ -160,19 +153,8 @@ const FormMain = (props) => {
       const docSnap = await getDoc(docIdRef);
       if (docSnap.exists() && docSnap.data().flag === false) {
         setLoader(false);
-        return(
-          notify(
-               {
-          message:
-            "Looks like you email has not been verified, please verify your email to proceed",
-          width: 600,
-          shading: true,
-          position: "center",
-        },
-        "error",
-        2000 
-          )
-        )
+        return notification("Looks like you email has not been verified, please verify your email to proceed","error");
+
       }
 
       // Schedule the meet
@@ -209,25 +191,13 @@ const FormMain = (props) => {
         const url = "http://localhost:8000/api/bookmeeting"
         const response = await axios.post(url,meetConfig);
         if(response.status == 201){
-          
-            const options = {
-        message: "Meeting has be scheduled, check you email for more details.",
-        position: {
-            at: "center",
-            my: "center",
-            of: window
-        },
-        width: "100%",
-        type:"success",
-        displayTime: 2000,
-        shading: false
-    };
+      
         localStorage.removeItem("mydate");
         localStorage.removeItem("flag");
         localStorage.removeItem("mytime");
         setLoader(false);
-        await notify(options);
-    navigate("/")
+        await notification("Meeting has been scheduled, check your email for more details.", "success");
+        navigate("/");
         }     
       else{
         setLoader(false);
@@ -246,6 +216,7 @@ const FormMain = (props) => {
   return (
     <React.Fragment>
       {loader && <LoaderPortal />}
+      
       <div
         style={{
           marginRight: "25px",

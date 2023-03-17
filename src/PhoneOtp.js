@@ -22,12 +22,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB1EbkpxNL7s2pQp5nH3J106WCScDHFtzU",
-  authDomain: "test-11d66.firebaseapp.com",
-  projectId: "test-11d66",
-  storageBucket: "test-11d66.appspot.com",
-  messagingSenderId: "24718878064",
-  appId: "1:24718878064:web:a18c686e06c9a969075bb5"
+  apiKey: "AIzaSyAONguXjvUpj7FWL0jupIT1skOYrmf3JTg",
+  authDomain: "emailsending-b9e94.firebaseapp.com",
+  projectId: "emailsending-b9e94",
+  storageBucket: "emailsending-b9e94.appspot.com",
+  messagingSenderId: "341426123567",
+  appId: "1:341426123567:web:4e7af285e9750aa72767da"
 };
 firebase.initializeApp(firebaseConfig);
 const PhoneVerification = (props) => {

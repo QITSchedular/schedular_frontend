@@ -16,10 +16,10 @@ export default function App() {
           <Route path="/" element={<CalendarRender />} />
 
           <Route path="/scheduleTime" element={<TimeSlotMain />} />
-          <Route
+          {/* <Route
             path="/scheduleTime/phoneAuthentication/"
             element={<PhoneOtpMain />}
-          />
+          /> */}
           <Route
             path="/scheduleTime/phoneAuthentication/EnterDetails"
             element={<Form />}
