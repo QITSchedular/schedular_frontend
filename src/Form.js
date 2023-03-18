@@ -29,7 +29,7 @@ const Form = () => {
   } else{
     endTime = `${meetData.mySelection.split(' ')[0]} - ${meetData.mySelection.split(':')[0]}:30 AM`
   }
-  console.log(endTime)
+  // console.log(endTime)
 // const timeString = meetData.mySelection;
 // const startDate = new Date(`2000-01-01T${timeString}`);
 

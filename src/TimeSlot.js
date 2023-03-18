@@ -160,7 +160,7 @@ const TimeSlot = ({ meetingDate, onDateChange, meetDate}) => {
   }, [meetingDate]);
   
   const fetchMeetingSlots = React.useCallback(async () => {
-    const response = await axios.post(`api/test`,{
+    const response = await axios.post(`https://subd.qitsolution.co.in/api/test`,{
       meetingDate: meetingDate
     });
     

@@ -106,7 +106,7 @@ const FormMain = (props) => {
         }).toString();
         setLoader(true);
         sendSignInLinkToEmail(auth, email, {
-          url: `http://localhost:3000/bookmeeting?${queryParams}`,
+          url: `https://schedular.qitsolution.co.in/bookmeeting?${queryParams}`,
           handleCodeInApp: true
         }).then((data)=>{
           setLoader(false);
@@ -188,7 +188,7 @@ const FormMain = (props) => {
           isOnlineMeeting: true,
           onlineMeetingProvider: "teamsForBusiness",
         };
-        const url = "http://localhost:8000/api/bookmeeting"
+        const url = "https://subd.qitsolution.co.in/api/bookmeeting"
         const response = await axios.post(url,meetConfig);
         if(response.status == 201){
       
